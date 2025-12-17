@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -25,6 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float regenHealth;
 
     [SerializeField] private GameObject destroyEffect;
+
+     private SpriteRenderer spriteRenderer;
+     private Material defaultMaterial;
+     [SerializeField]private Material whiteMaterial;
     
 
 
@@ -44,6 +49,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         //preFab = GetComponent<GameObject>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        defaultMaterial = spriteRenderer.material;
+
         
 
         energy = maxEnergy;
@@ -95,14 +104,15 @@ public class PlayerController : MonoBehaviour
         UIController.Instance.UpdateEnergySlider(energy, maxEnergy);
     }
 
-
     void EnterBoost()
     {
+        
         if(energy > 5)
         {
             animator.SetBool("boosting", true);
             boost = boostPower;
-            isBoosting = true;  
+            isBoosting = true; 
+            AudioManager.Instance.PlaySound(AudioManager.Instance.fire);
         }
         
     }
@@ -126,8 +136,12 @@ public class PlayerController : MonoBehaviour
 
     private void TakeDamage(int damage)
     {
+        
         health = health - damage;
         UIController.Instance.UpdateHealthSlider(health,maxHealth);
+        AudioManager.Instance.PlaySound(AudioManager.Instance.hit);
+        spriteRenderer.material = whiteMaterial;
+        StartCoroutine(ResetMaterial());
 
         if(health <= 0)
         {
@@ -135,9 +149,17 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
             Instantiate(destroyEffect, transform.position, transform.rotation);
             GameManager.Instance.GameOver();
+            AudioManager.Instance.PlaySound(AudioManager.Instance.ice);
         }
     }
 
+    IEnumerator ResetMaterial()
+    {
+        yield return new WaitForSeconds(.2f);
+        spriteRenderer.material = defaultMaterial;
+        
+    }
 
-    
+
+
 }

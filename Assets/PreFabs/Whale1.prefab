@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9085588179069165905}
-  - component: {fileID: 1558633957606577714}
   - component: {fileID: 6857194683543529958}
   - component: {fileID: 6111096357639321109}
+  - component: {fileID: -1029803132598421991}
   m_Layer: 8
   m_Name: Whale1
   m_TagString: Untagged
@@ -34,18 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1558633957606577714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7036885341046318022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a85b5c71a137848b090ed81e4f966a44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Whale
 --- !u!212 &6857194683543529958
 SpriteRenderer:
   serializedVersion: 2
@@ -127,3 +115,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1029803132598421991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036885341046318022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccae57c1f81442e09ff69dc0e2713f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Whale

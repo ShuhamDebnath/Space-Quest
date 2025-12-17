@@ -29,11 +29,13 @@ public class GameManager : MonoBehaviour
         {
             UIController.Instance.pausePannel.SetActive(true);
             Time.timeScale = 0f;
+            AudioManager.Instance.PlaySound(AudioManager.Instance.pause);
         }
         else
         {
             UIController.Instance.pausePannel.SetActive(false);
             Time.timeScale = 1f;
+            AudioManager.Instance.PlaySound(AudioManager.Instance.unPause);
         }
 
         PlayerController.Instance.ExitBoost();

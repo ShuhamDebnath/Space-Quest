@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9085588179069165905}
+  - component: {fileID: -4900668539128441518}
   - component: {fileID: 6857194683543529958}
-  - component: {fileID: 6111096357639321109}
   - component: {fileID: -4367758748652620425}
-  - component: {fileID: 284091261913042979}
+  - component: {fileID: -8340831192293246880}
   m_Layer: 8
   m_Name: LostWhale
   m_TagString: Untagged
@@ -36,6 +36,18 @@ Transform:
   - {fileID: 3015796699560648754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4900668539128441518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036885341046318022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c549b48a355f4a669b3261e6d72cf65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LostWheel
 --- !u!212 &6857194683543529958
 SpriteRenderer:
   serializedVersion: 2
@@ -95,28 +107,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!95 &6111096357639321109
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7036885341046318022}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 91eae171f6c874c4ea77cae6f86adbaf, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!70 &-4367758748652620425
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -154,18 +144,28 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0000000057567036, y: -0.048290737}
   m_Size: {x: 4.200001, y: 2.3670971}
   m_Direction: 1
---- !u!114 &284091261913042979
-MonoBehaviour:
+--- !u!95 &-8340831192293246880
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7036885341046318022}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c549b48a355f4a669b3261e6d72cf65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LostWheel
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91eae171f6c874c4ea77cae6f86adbaf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7728117945002713422
 PrefabInstance:
   m_ObjectHideFlags: 0

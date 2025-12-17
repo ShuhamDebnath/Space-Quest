@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Astroid : MonoBehaviour
@@ -5,6 +6,9 @@ public class Astroid : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    
+    private Material defaultMaterial;
+    [SerializeField]private Material whiteMaterial;
 
 
 
@@ -17,7 +21,7 @@ public class Astroid : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-
+        defaultMaterial = spriteRenderer.material;
         
         spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
         float moveX = Random.Range(-1f, 0f);
@@ -34,4 +38,22 @@ public class Astroid : MonoBehaviour
         if(transform.position.x < -11 ) Destroy(gameObject);
         
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            spriteRenderer.material = whiteMaterial;
+            StartCoroutine(ResetMaterial());
+        }
+    }
+
+    IEnumerator ResetMaterial()
+    {
+        yield return new WaitForSeconds(.2f);
+        spriteRenderer.material = defaultMaterial;
+        
+    }
+
+
 }
