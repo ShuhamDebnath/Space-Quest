@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6857194683543529958}
   - component: {fileID: -4367758748652620425}
   - component: {fileID: -8340831192293246880}
+  - component: {fileID: -9097561749915286043}
   m_Layer: 8
   m_Name: LostWhale
   m_TagString: Untagged
@@ -166,6 +167,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-9097561749915286043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036885341046318022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ad791b188164cd49d3ffe8576556f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatInSpace
 --- !u!1001 &7728117945002713422
 PrefabInstance:
   m_ObjectHideFlags: 0

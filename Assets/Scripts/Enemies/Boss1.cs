@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Boss1 : MonoBehaviour
 {
+    public static Boss1 Instance;
 
     private Animator animator;
 
@@ -12,35 +13,54 @@ public class Boss1 : MonoBehaviour
     private float switchInteval;
     private float switchTimer;
 
-    private float lives;
+    private int health;
+    private int damage;
+
+    void Awake()
+    {
+        if (Instance != null) Destroy(Instance);
+        else Instance = this;
+    }
 
     void Start()
     {
         animator = GetComponent<Animator>();
         EnterChargeState();
-        lives = 50;
+        health = 50;
+        damage = 10;
 
     }
 
     void Update()
     {
+
+        Vector3 playerPosition = PlayerController.Instance.transform.position;
+
         if (switchTimer > 0) switchTimer -= Time.deltaTime;
         else
         {
-            if (charging) EnterPatrolState();
+            if (charging && transform.position.x > playerPosition.x) EnterPatrolState();
             else EnterChargeState();
         }
 
         if (Mathf.Abs(transform.position.y) > 2) speedY *= -1;
+        else if (transform.position.x < playerPosition.x) EnterChargeState();
 
-        float moveX = speedX * GameManager.Instance.worldSpeed  * Time.deltaTime;
+
+        bool playerBoost = PlayerController.Instance.isBoosting;
+        float moveX;
+        if (playerBoost && !charging) moveX = GameManager.Instance.worldSpeed * Time.deltaTime * -0.5f;
+        else moveX = speedX * Time.deltaTime;
+        //float moveX = speedX * GameManager.Instance.worldSpeed  * Time.deltaTime;
         float moveY = speedY * Time.deltaTime;
 
 
         transform.position += new Vector3(-moveX, moveY);
         if (transform.position.x < -11) Destroy(gameObject);
 
-        if(transform.position.x < -15) TakeDamage(100);
+        if (transform.position.x < -15) TakeDamage(100);
+
+
 
     }
 
@@ -56,25 +76,36 @@ public class Boss1 : MonoBehaviour
 
     void EnterChargeState()
     {
-        speedX = 4f;
+        if (!charging) AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossCharge);
+        speedX = 10f;
         speedY = 0;
-        switchInteval = Random.Range(2f, 2.5f);
+        switchInteval = Random.Range(0.3f, 1.5f);
         switchTimer = switchInteval;
         charging = true;
         animator.SetBool("charging", charging);
-        AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossCharge);
     }
 
     public void TakeDamage(int damage)
     {
-        lives -= damage;
+        health -= damage;
         AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossHit);
-        if(lives <= 0 ) Destroy(gameObject);
+        if (health <= 0) Destroy(gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet")) TakeDamage(0);
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Astroid astroid = collision.gameObject.GetComponent<Astroid>();
+            if (astroid) astroid.TakeDamage(damage);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            if (playerController) playerController.TakeDamage(damage);
+
+        }
+
     }
 
 

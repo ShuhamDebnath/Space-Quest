@@ -24,10 +24,10 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        if (critterCount == 20)
+        if (critterCount == 15)
         {
             critterCount = 0;
-            Instantiate(boss1, new Vector3(15f, 0, 0), Quaternion.Euler(0, 0, -90));
+            Instantiate(boss1, new Vector3(13f, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 0, -90));
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -25,10 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject destroyEffect;
 
     private SpriteRenderer spriteRenderer;
-    private Material defaultMaterial;
-    [SerializeField] private Material whiteMaterial;
+    private FlashWhite flashWhite;
 
     [SerializeField] private ParticleSystem engineEffect;
+    public int damage;
 
 
 
@@ -49,10 +50,11 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         //preFab = GetComponent<GameObject>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        defaultMaterial = spriteRenderer.material;
+        flashWhite = GetComponent<FlashWhite>();
 
         GameManager.Instance.SetWorldSpeed(1f);
+
+        damage = 5;
 
         energy = maxEnergy;
         health = maxHealth;
@@ -133,19 +135,33 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))TakeDamage(1);
-        else if (collision.gameObject.CompareTag("Boss")) TakeDamage(10);
+
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Astroid astroid = collision.gameObject.GetComponent<Astroid>();
+            if (astroid) astroid.TakeDamage(damage);
+            
+        }
+        else if (collision.gameObject.CompareTag("Critter"))
+        {
+            Critter1 critter1 = collision.gameObject.GetComponent<Critter1>();
+        }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            Boss1 boss1 = collision.gameObject.GetComponent<Boss1>();
+            if (boss1) boss1.TakeDamage(damage);
+            gameObject.SetActive(false);
+        }
 
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
 
         health = health - damage;
         UIController.Instance.UpdateHealthSlider(health, maxHealth);
         AudioManager.Instance.PlaySound(AudioManager.Instance.hit);
-        spriteRenderer.material = whiteMaterial;
-        StartCoroutine(ResetMaterial());
+        flashWhite.Flash();
 
         if (health <= 0)
         {
@@ -155,13 +171,6 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(AudioManager.Instance.ice);
         }
-    }
-
-    IEnumerator ResetMaterial()
-    {
-        yield return new WaitForSeconds(.2f);
-        spriteRenderer.material = defaultMaterial;
-
     }
 
 

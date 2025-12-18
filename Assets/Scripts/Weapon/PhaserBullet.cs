@@ -12,10 +12,21 @@ public class PhaserBullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle") ||
-            collision.gameObject.CompareTag("Critter") ||
-            collision.gameObject.CompareTag("Boss"))
+
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
+            Astroid astroid = collision.gameObject.GetComponent<Astroid>();
+            if (astroid) astroid.TakeDamage(PhaserWeapon.Instance.damage);
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Critter"))
+        {
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            Boss1 boss1 = collision.gameObject.GetComponent<Boss1>();
+            if (boss1) boss1.TakeDamage(PhaserWeapon.Instance.damage);
             gameObject.SetActive(false);
         }
 

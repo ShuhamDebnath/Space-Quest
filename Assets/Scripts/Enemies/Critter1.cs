@@ -60,16 +60,7 @@ public class Critter1 : MonoBehaviour
 
 
         transform.position = Vector3.MoveTowards(transform.position, tergetPosition, moveSpeed * Time.deltaTime);
-
-
-        float moveX = GameManager.Instance.worldSpeed * Time.deltaTime;
-        transform.position += new Vector3(-moveX, 0);
-
-
-        if (Mathf.Abs(transform.position.x) > 15 || Mathf.Abs(transform.position.y) > 5)
-        {
-            Destroy(gameObject);
-        }
+        
 
     }
 

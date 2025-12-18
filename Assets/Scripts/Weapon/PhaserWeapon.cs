@@ -9,7 +9,7 @@ public class PhaserWeapon : MonoBehaviour
     [SerializeField] private ObjectPoller bulletPool;
 
     public float speed;
-    public float damage;
+    public int damage;
 
     void Awake()
     {
@@ -20,6 +20,8 @@ public class PhaserWeapon : MonoBehaviour
 
     void Start()
     {
+        speed = 10;
+        damage = 2;
 
     }
 

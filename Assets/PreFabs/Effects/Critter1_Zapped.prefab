@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2689666161636584460}
   - component: {fileID: 2316870042473176521}
   - component: {fileID: 8744103408329311315}
-  - component: {fileID: 2672334259611463015}
+  - component: {fileID: 7537790544680100303}
+  - component: {fileID: -4690195609940744117}
   m_Layer: 0
   m_Name: Critter1_Zapped
   m_TagString: Untagged
@@ -115,7 +116,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2672334259611463015
+--- !u!114 &7537790544680100303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +125,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6659590275181816050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10e39025d87be4d5490bff660f7165b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 875ee27a51b92487fac407769d5a7a8e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Boom
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyWhenAnimationFinish
   animator: {fileID: 0}
+--- !u!114 &-4690195609940744117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6659590275181816050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ad791b188164cd49d3ffe8576556f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatInSpace
