@@ -40,7 +40,7 @@ public class ObjectSpawner : MonoBehaviour
             if (waveNumber == waves.Count) waveNumber = 0;
         }
 
-        waves[waveNumber].spawnTimer += Time.deltaTime * PlayerController.Instance.boost;
+        waves[waveNumber].spawnTimer += Time.deltaTime * GameManager.Instance.worldSpeed;
 
         if (waves[waveNumber].spawnTimer >= waves[waveNumber].spawnInterval)
         {
@@ -59,7 +59,7 @@ public class ObjectSpawner : MonoBehaviour
 
     private void SpaewnObject()
     {
-        Instantiate(waves[waveNumber].prefab, RandomSpawnPoint(), transform.rotation);
+        Instantiate(waves[waveNumber].prefab, RandomSpawnPoint(), transform.rotation, transform);
     }
 
 

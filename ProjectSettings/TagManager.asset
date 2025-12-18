@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Obstacle
+  - Bullet
+  - Critter
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - Player
   - LevelBoundaries
   - Obstricle
-  - 
-  - 
-  - 
+  - Critter
+  - Bullet
+  - Boss
   - 
   - 
   - 

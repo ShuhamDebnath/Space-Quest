@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    
+
     public static AudioManager Instance;
 
     public AudioSource ice;
@@ -11,18 +10,29 @@ public class AudioManager : MonoBehaviour
     public AudioSource hit;
     public AudioSource pause;
     public AudioSource unPause;
-    
+    public AudioSource boom2;
+    public AudioSource hitRock;
+    public AudioSource shoot;
+    public AudioSource squished;
+    public AudioSource Burn;
+    public AudioSource BossCharge;
+    public AudioSource BossHit;
+
     void Awake()
     {
-        if(Instance != null) Destroy(gameObject);
+        if (Instance != null) Destroy(gameObject);
         else Instance = this;
-    } 
+    }
 
     public void PlaySound(AudioSource sound)
     {
         sound.Stop();
         sound.Play();
-
-
+    }
+    public void PlayModifiedSound(AudioSource sound)
+    {
+        sound.pitch = Random.Range(0.7f, 1.3f);
+        sound.Stop();
+        sound.Play();
     }
 }

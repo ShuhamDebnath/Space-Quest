@@ -170,6 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Astroid
   whiteMaterial: {fileID: 2100000, guid: c0d24fa86d823492aabd37d43c22dde0, type: 2}
+  destroyEffect: {fileID: 1341926758855728996, guid: 444615cea6fa4497aae025f34351a013, type: 3}
+  life: 2
   sprites:
   - {fileID: 2357709100146644040, guid: 458d0cc0cc52c41d3816e27154fcd45f, type: 3}
   - {fileID: -1930340035, guid: 458d0cc0cc52c41d3816e27154fcd45f, type: 3}

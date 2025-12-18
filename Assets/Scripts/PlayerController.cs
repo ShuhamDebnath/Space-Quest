@@ -9,10 +9,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     private Rigidbody2D rb;
     private Animator animator;
-    public float boost = 1f;
-    private float boostPower = 5f;
     public bool isBoosting = false;
-
 
     [SerializeField] private Vector2 playerDirection;
     [SerializeField] private float moveSpeed;
@@ -27,15 +24,17 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject destroyEffect;
 
-     private SpriteRenderer spriteRenderer;
-     private Material defaultMaterial;
-     [SerializeField]private Material whiteMaterial;
-    
+    private SpriteRenderer spriteRenderer;
+    private Material defaultMaterial;
+    [SerializeField] private Material whiteMaterial;
+
+    [SerializeField] private ParticleSystem engineEffect;
+
 
 
     void Awake()
     {
-        if(Instance!= null)
+        if (Instance != null)
         {
             Destroy(gameObject);
         }
@@ -53,14 +52,14 @@ public class PlayerController : MonoBehaviour
 
         defaultMaterial = spriteRenderer.material;
 
-        
+        GameManager.Instance.SetWorldSpeed(1f);
 
         energy = maxEnergy;
         health = maxHealth;
 
         UIController.Instance.UpdateEnergySlider(energy, maxEnergy);
         UIController.Instance.UpdateHealthSlider(health, maxHealth);
-        
+
     }
 
     void Update()
@@ -69,36 +68,43 @@ public class PlayerController : MonoBehaviour
         float directionY = Input.GetAxisRaw("Vertical");
         playerDirection = new Vector2(directionX, directionY).normalized;
 
-        if(Time.timeScale > 0)
-        { 
+        if (Time.timeScale > 0)
+        {
             animator.SetFloat("moveX", directionX);
             animator.SetFloat("moveY", directionY);
-        
 
-            if(Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire2"))
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire2"))
             {
                 EnterBoost();
             }
-            else if(Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Fire2"))
+            else if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp("Fire2"))
             {
                 ExitBoost();
             }
+
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                PhaserWeapon.Instance.Shoot();
+            }
         }
-        
+
+
     }
 
     void FixedUpdate()
     {
         rb.linearVelocity = playerDirection * moveSpeed;
 
-        if(isBoosting)
+        if (isBoosting)
         {
-            if(energy >= 0.2f) energy -= 0.2f;
+            if (energy >= 0.5f) energy -= 0.5f;
             else ExitBoost();
         }
         else
         {
-            if(energy < maxEnergy) energy += regenEnergy;
+            if (energy < maxEnergy) energy += regenEnergy;
         }
 
         UIController.Instance.UpdateEnergySlider(energy, maxEnergy);
@@ -106,46 +112,44 @@ public class PlayerController : MonoBehaviour
 
     void EnterBoost()
     {
-        
-        if(energy > 5)
+
+        if (energy > 5)
         {
             animator.SetBool("boosting", true);
-            boost = boostPower;
-            isBoosting = true; 
+            GameManager.Instance.SetWorldSpeed(5f);
+            isBoosting = true;
             AudioManager.Instance.PlaySound(AudioManager.Instance.fire);
+            engineEffect.Play();
         }
-        
+
     }
 
     public void ExitBoost()
     {
         animator.SetBool("boosting", false);
-        boost = 1f;
+        GameManager.Instance.SetWorldSpeed(1f);
         isBoosting = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        {
-            TakeDamage(1);
-            
-        }
-        
+        if (collision.gameObject.CompareTag("Obstacle"))TakeDamage(1);
+        else if (collision.gameObject.CompareTag("Boss")) TakeDamage(10);
+
     }
 
     private void TakeDamage(int damage)
     {
-        
+
         health = health - damage;
-        UIController.Instance.UpdateHealthSlider(health,maxHealth);
+        UIController.Instance.UpdateHealthSlider(health, maxHealth);
         AudioManager.Instance.PlaySound(AudioManager.Instance.hit);
         spriteRenderer.material = whiteMaterial;
         StartCoroutine(ResetMaterial());
 
-        if(health <= 0)
+        if (health <= 0)
         {
-            boost = 0f;
+            GameManager.Instance.SetWorldSpeed(0f);
             gameObject.SetActive(false);
             Instantiate(destroyEffect, transform.position, transform.rotation);
             GameManager.Instance.GameOver();
@@ -157,7 +161,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
         spriteRenderer.material = defaultMaterial;
-        
+
     }
 
 

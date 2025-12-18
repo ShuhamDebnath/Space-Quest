@@ -4,28 +4,36 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-   public static GameManager Instance;
+    public static GameManager Instance;
 
+    public float worldSpeed;
+    public float critterCount;
+    [SerializeField] private GameObject boss1;
 
-    public float WorldSpeed;
 
     void Awake()
     {
-        if(Instance != null) Destroy(gameObject);
+        if (Instance != null) Destroy(gameObject);
         else Instance = this;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Fire3"))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Fire3"))
         {
             Pause();
+        }
+
+        if (critterCount == 20)
+        {
+            critterCount = 0;
+            Instantiate(boss1, new Vector3(15f, 0, 0), Quaternion.Euler(0, 0, -90));
         }
     }
 
     public void Pause()
     {
-        if(UIController.Instance.pausePannel.activeSelf == false)
+        if (UIController.Instance.pausePannel.activeSelf == false)
         {
             UIController.Instance.pausePannel.SetActive(true);
             Time.timeScale = 0f;
@@ -47,7 +55,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    
+
 
     public void MoveToMenu()
     {
@@ -56,13 +64,18 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        StartCoroutine(GameOverScreen()); 
+        StartCoroutine(GameOverScreen());
     }
 
     IEnumerator GameOverScreen()
     {
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("GameOver");
+    }
+
+    public void SetWorldSpeed(float speed)
+    {
+        worldSpeed = speed;
     }
 
 
