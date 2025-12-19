@@ -8,13 +8,18 @@ public class GameManager : MonoBehaviour
 
     public float worldSpeed;
     public float critterCount;
-    [SerializeField] private GameObject boss1;
+    private ObjectPooler objectPooler;
 
 
     void Awake()
     {
         if (Instance != null) Destroy(gameObject);
         else Instance = this;
+    }
+    void Start()
+    {
+        objectPooler = GameObject.Find("Boss1Pool").GetComponent<ObjectPooler>();
+        critterCount = 0;
     }
 
     void Update()
@@ -24,10 +29,13 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        if (critterCount == 15)
+        if (critterCount >= 15)
         {
             critterCount = 0;
-            Instantiate(boss1, new Vector3(13f, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 0, -90));
+            GameObject destroyEffect = objectPooler.GetPoolObject();
+            destroyEffect.transform.position = new Vector3(13f, Random.Range(-3f, 3f));
+            destroyEffect.transform.rotation = Quaternion.Euler(0, 0, -90);
+            destroyEffect.SetActive(true);
         }
     }
 

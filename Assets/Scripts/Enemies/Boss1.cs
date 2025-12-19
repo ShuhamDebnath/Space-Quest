@@ -14,19 +14,42 @@ public class Boss1 : MonoBehaviour
     private float switchTimer;
 
     private int health;
+    private int maxHealth;
     private int damage;
+    private int experianceToGive = 10;
+
+    private ObjectPooler objectPooler;
+    private ObjectPooler distroyEffectPool;
+
+
+
 
     void Awake()
     {
         if (Instance != null) Destroy(Instance);
         else Instance = this;
+
+        animator = GetComponent<Animator>();
+        gameObject.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        health = maxHealth;
+        EnterChargeState();
+        
     }
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        objectPooler = GameObject.Find("Boss1Pool").GetComponent<ObjectPooler>();
+        distroyEffectPool = GameObject.Find("Boom1Pool").GetComponent<ObjectPooler>();
+
+
         EnterChargeState();
-        health = 50;
+        maxHealth = 100;
+        health = maxHealth;
         damage = 10;
 
     }
@@ -56,9 +79,8 @@ public class Boss1 : MonoBehaviour
 
 
         transform.position += new Vector3(-moveX, moveY);
-        if (transform.position.x < -11) Destroy(gameObject);
 
-        if (transform.position.x < -15) TakeDamage(100);
+        if (transform.position.x < -12) gameObject.SetActive(false);
 
 
 
@@ -89,7 +111,18 @@ public class Boss1 : MonoBehaviour
     {
         health -= damage;
         AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossHit);
-        if (health <= 0) Destroy(gameObject);
+        if (health <= 0)
+        {
+
+            GameObject destroyEffect = distroyEffectPool.GetPoolObject();
+            destroyEffect.transform.position = transform.position;
+            destroyEffect.transform.rotation = transform.rotation;
+            destroyEffect.SetActive(true);
+            AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.boom2);
+            gameObject.SetActive(false);
+
+            PlayerController.Instance.GetExperiance(experianceToGive);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -97,7 +130,7 @@ public class Boss1 : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Astroid astroid = collision.gameObject.GetComponent<Astroid>();
-            if (astroid) astroid.TakeDamage(damage);
+            if (astroid) astroid.TakeDamage(damage, false);
         }
         else if (collision.gameObject.CompareTag("Player"))
         {

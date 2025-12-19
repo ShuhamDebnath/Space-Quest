@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3921767534943834349
+--- !u!1 &63973818001813089
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,64 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1731486166233402085}
-  - component: {fileID: 6824030301095152548}
-  - component: {fileID: 8225829648939546553}
-  - component: {fileID: 9187945534188637687}
-  - component: {fileID: 2759168143534711937}
-  m_Layer: 9
-  m_Name: Critter1
-  m_TagString: Critter
+  - component: {fileID: 8440482505564118169}
+  - component: {fileID: 6902281451036270101}
+  - component: {fileID: 2290958296532645008}
+  - component: {fileID: 2719136653686028507}
+  - component: {fileID: 2633835155146707205}
+  - component: {fileID: 6666062521737345806}
+  m_Layer: 12
+  m_Name: Beetlemorph
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1731486166233402085
+--- !u!4 &8440482505564118169
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3921767534943834349}
+  m_GameObject: {fileID: 63973818001813089}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6824030301095152548
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &6902281451036270101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63973818001813089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 278cd2dcc63764ec8aab1a2073b9a335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bettlemorphs
+  health: 0
+  maxHealth: 5
+  damage: 2
+  experianceToGive: 1
+  spriteRenderer: {fileID: 0}
+  sprites:
+  - {fileID: 5588965506718041536, guid: f7645d77408764ee08e5433cb1f1de88, type: 3}
+  - {fileID: 8176062168316702862, guid: f7645d77408764ee08e5433cb1f1de88, type: 3}
+  - {fileID: -3962547319695902046, guid: f7645d77408764ee08e5433cb1f1de88, type: 3}
+  - {fileID: 1408924143864969165, guid: f7645d77408764ee08e5433cb1f1de88, type: 3}
+--- !u!212 &2290958296532645008
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3921767534943834349}
+  m_GameObject: {fileID: 63973818001813089}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -82,44 +105,25 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1123536973
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3874517981774512945, guid: b251b0edd17d04ef39e52ab7ec3614a6, type: 3}
+  m_Sprite: {fileID: 5588965506718041536, guid: f7645d77408764ee08e5433cb1f1de88, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8, y: 0.8}
+  m_Size: {x: 1.2, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &8225829648939546553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3921767534943834349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f93a77425334942885441d1cb37356, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  sprites:
-  - {fileID: 3874517981774512945, guid: b251b0edd17d04ef39e52ab7ec3614a6, type: 3}
-  - {fileID: -1288456409569948990, guid: b251b0edd17d04ef39e52ab7ec3614a6, type: 3}
-  - {fileID: -2155934039503974715, guid: b251b0edd17d04ef39e52ab7ec3614a6, type: 3}
-  - {fileID: 7167999689058341495, guid: b251b0edd17d04ef39e52ab7ec3614a6, type: 3}
-  moveTimer: 0
-  moveInterval: 0
---- !u!58 &9187945534188637687
+--- !u!58 &2719136653686028507
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3921767534943834349}
+  m_GameObject: {fileID: 63973818001813089}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -148,31 +152,28 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.21
---- !u!50 &2759168143534711937
-Rigidbody2D:
-  serializedVersion: 5
+  m_Radius: 0.45
+--- !u!114 &2633835155146707205
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3921767534943834349}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_GameObject: {fileID: 63973818001813089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ad791b188164cd49d3ffe8576556f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloatInSpace
+--- !u!114 &6666062521737345806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63973818001813089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c4390a97fab411b81f91073616bbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashWhite

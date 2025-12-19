@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoller : MonoBehaviour
+public class ObjectPooler : MonoBehaviour
 {
 
     public GameObject preFab;

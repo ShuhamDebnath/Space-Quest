@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Pool;
 
 public class PlayerController : MonoBehaviour
 {
@@ -23,7 +25,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private float regenHealth;
 
-    [SerializeField] private GameObject destroyEffect;
+    [SerializeField] private int experiance;
+    [SerializeField] private int currentLevel;
+    [SerializeField] private int maxLevel;
+    [SerializeField] private List<int> playerlevels;
+
+   // [SerializeField] private GameObject destroyEffect;
+    private ObjectPooler objectPooler;
 
     private SpriteRenderer spriteRenderer;
     private FlashWhite flashWhite;
@@ -44,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        
 
         //moveSpeed = 2;
         rb = GetComponent<Rigidbody2D>();
@@ -51,16 +60,25 @@ public class PlayerController : MonoBehaviour
         //preFab = GetComponent<GameObject>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         flashWhite = GetComponent<FlashWhite>();
+        objectPooler = GameObject.Find("Boom1Pool").GetComponent<ObjectPooler>();
 
         GameManager.Instance.SetWorldSpeed(1f);
 
-        damage = 5;
+        damage = 3;
 
         energy = maxEnergy;
         health = maxHealth;
 
+
+        for (int i = playerlevels.Count; i < maxLevel; i++)
+        {   
+            playerlevels.Add(Mathf.CeilToInt(playerlevels[playerlevels.Count - 1] * 1.1f) + 15);
+        }
+
         UIController.Instance.UpdateEnergySlider(energy, maxEnergy);
         UIController.Instance.UpdateHealthSlider(health, maxHealth);
+        experiance = 0;
+        UIController.Instance.UpdateExperianceSlider(experiance, playerlevels[currentLevel]);
 
     }
 
@@ -139,7 +157,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Astroid astroid = collision.gameObject.GetComponent<Astroid>();
-            if (astroid) astroid.TakeDamage(damage);
+            if (astroid) astroid.TakeDamage(damage, true);
             
         }
         else if (collision.gameObject.CompareTag("Critter"))
@@ -150,7 +168,12 @@ public class PlayerController : MonoBehaviour
         {
             Boss1 boss1 = collision.gameObject.GetComponent<Boss1>();
             if (boss1) boss1.TakeDamage(damage);
-            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy) enemy.TakeDamage(damage);
+            
         }
 
     }
@@ -167,12 +190,33 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.Instance.SetWorldSpeed(0f);
             gameObject.SetActive(false);
-            Instantiate(destroyEffect, transform.position, transform.rotation);
+
+            GameObject destroyEffect = objectPooler.GetPoolObject();
+            destroyEffect.transform.position = transform.position;
+            destroyEffect.transform.rotation = transform.rotation;
+            destroyEffect.SetActive(true);
+
             GameManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(AudioManager.Instance.ice);
         }
     }
 
+    public void GetExperiance(int exp)
+    {
+        experiance += exp;
+        UIController.Instance.UpdateExperianceSlider(experiance, playerlevels[currentLevel]);
+        if(experiance > playerlevels[currentLevel]) LevelUp() ;
+    }
 
+    public void LevelUp()
+    {
+        experiance  -= playerlevels[currentLevel];
+        if(currentLevel < maxLevel - 1) currentLevel++;
+        UIController.Instance.UpdateExperianceSlider(experiance, playerlevels[currentLevel]);
+        PhaserWeapon.Instance.LevelUp();
+        maxHealth++;
+        health = maxHealth;
+        UIController.Instance.UpdateHealthSlider(health, maxHealth);
+    }
 
 }

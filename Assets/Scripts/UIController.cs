@@ -13,6 +13,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Slider experianceSlider;
+    [SerializeField] private TMP_Text experianceText;
     public GameObject pausePannel;
 
 
@@ -35,6 +37,12 @@ public class UIController : MonoBehaviour
         healthSlider.maxValue = max;
         healthSlider.value =  Mathf.RoundToInt(current);
         healthText.text = healthSlider.value.ToString() +" / "+ healthSlider.maxValue.ToString() ;
+    }
+    public void UpdateExperianceSlider(float current, float max)
+    {
+        experianceSlider.maxValue = max;
+        experianceSlider.value =  Mathf.RoundToInt(current);
+        experianceText.text = experianceSlider.value.ToString() +" / "+ experianceSlider.maxValue.ToString() ;
     }
 
 }

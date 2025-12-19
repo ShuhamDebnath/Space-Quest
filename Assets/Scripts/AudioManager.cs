@@ -18,6 +18,8 @@ public class AudioManager : MonoBehaviour
     public AudioSource BossCharge;
     public AudioSource BossHit;
     public AudioSource bossSpawn;
+    public AudioSource bettleDestroy;
+    public AudioSource bettleHit;
 
     void Awake()
     {
