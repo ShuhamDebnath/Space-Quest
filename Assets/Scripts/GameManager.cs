@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             Pause();
         }
 
-        if (critterCount >= 15)
+        if (critterCount >= 5)
         {
             critterCount = 0;
             GameObject destroyEffect = objectPooler.GetPoolObject();

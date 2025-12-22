@@ -3,10 +3,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int damage;
-    [SerializeField] private int experianceToGive;
+    [SerializeField] protected int health;
+    [SerializeField] protected int maxHealth;
+    [SerializeField] protected int damage;
+    [SerializeField] protected int experianceToGive;
 
     protected SpriteRenderer spriteRenderer;
     private FlashWhite flashWhite;
@@ -17,26 +17,29 @@ public class Enemy : MonoBehaviour
     protected float speedX = 0;
     protected float speedY = 0;
 
+    public virtual void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-    void OnEnable()
+    public virtual void OnEnable()
     {
         health = maxHealth;
     }
     public virtual void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         flashWhite = GetComponent<FlashWhite>();
 
     }
 
-    void Update()
+    public virtual void Update()
     {
 
         transform.position += new Vector3(speedX * Time.deltaTime, speedY * Time.deltaTime);
 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -46,7 +49,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;
         AudioManager.Instance.PlayModifiedSound(hitSound);

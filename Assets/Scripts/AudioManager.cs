@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource bossSpawn;
     public AudioSource bettleDestroy;
     public AudioSource bettleHit;
+    public AudioSource locustCharge;
+    public AudioSource locustHit;
+    public AudioSource locustDestroy;
 
     void Awake()
     {

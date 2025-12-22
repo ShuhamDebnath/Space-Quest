@@ -1,31 +1,25 @@
 using UnityEngine;
 
-public class Boss1 : MonoBehaviour
+public class Boss1 : Enemy
 {
     public static Boss1 Instance;
 
     private Animator animator;
 
-    private float speedX;
-    private float speedY;
     private bool charging;
 
     private float switchInteval;
     private float switchTimer;
 
-    private int health;
-    private int maxHealth;
-    private int damage;
-    private int experianceToGive = 10;
 
-    private ObjectPooler objectPooler;
     private ObjectPooler distroyEffectPool;
 
 
 
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
         if (Instance != null) Destroy(Instance);
         else Instance = this;
 
@@ -33,29 +27,31 @@ public class Boss1 : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         health = maxHealth;
         EnterChargeState();
+        AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.bossSpawn);
         
     }
 
-    void Start()
+    public override void Start()
     {
-        animator = GetComponent<Animator>();
-        objectPooler = GameObject.Find("Boss1Pool").GetComponent<ObjectPooler>();
+        base.Start();
         distroyEffectPool = GameObject.Find("Boom1Pool").GetComponent<ObjectPooler>();
 
-
+        objectPooler = GameObject.Find("BettlePopPool").GetComponent<ObjectPooler>();
+        hitSound = AudioManager.Instance.BossHit;
+        distroySound = AudioManager.Instance.boom2;
+        speedX = Random.Range(-0.8f, -1.5f);
         EnterChargeState();
-        maxHealth = 100;
-        health = maxHealth;
-        damage = 10;
 
     }
 
-    void Update()
+    public override void Update()
     {
+        base.Update();
 
         Vector3 playerPosition = PlayerController.Instance.transform.position;
 
@@ -99,7 +95,7 @@ public class Boss1 : MonoBehaviour
     void EnterChargeState()
     {
         if (!charging) AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossCharge);
-        speedX = 10f;
+        speedX = -5f;
         speedY = 0;
         switchInteval = Random.Range(0.3f, 1.5f);
         switchTimer = switchInteval;
@@ -107,8 +103,9 @@ public class Boss1 : MonoBehaviour
         animator.SetBool("charging", charging);
     }
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
+        base.TakeDamage(damage);
         health -= damage;
         AudioManager.Instance.PlayModifiedSound(AudioManager.Instance.BossHit);
         if (health <= 0)
@@ -125,18 +122,13 @@ public class Boss1 : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    public override void OnCollisionEnter2D(Collision2D collision)
     {
+        base.OnCollisionEnter2D(collision);
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Astroid astroid = collision.gameObject.GetComponent<Astroid>();
             if (astroid) astroid.TakeDamage(damage, false);
-        }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-            if (playerController) playerController.TakeDamage(damage);
-
         }
 
     }
